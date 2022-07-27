@@ -1,40 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment</title>
-</head>
-<body>
-    <h1>PHP Main</h1>
-    <?php
-    //  $a=1;
-    //  $b=2;
-    //  $z=$a+$b;
-    //  echo $z;
-    //  // 
-    //  for($k =0;$k<=10;$k++){
-    //      echo $k."<br>";
-    //  }
-    //  $x=0;
-    //  while($x<=10){
-    //      echo $x;
-    //      $x++;
-    //  }
-    //  $array = ["html","css","php"];
-    //  // echo $array;
-    //  print_r($array);
-    //  foreach($array as $key=>$value){
-    //      echo "<br>".$key;
-    //      echo "<br>".$value;
-    //  }
-    $value= ''; 
-    function Add($a){
-        $value =+ $a ;
-    }
-    Add(4+4);
-    echo $value;
-    ?>
-</body>
-</html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <center>
+                <h3>Login</h3>
+            </center>
+            <?php
+            if(isset($_POST['formsubmit'])){
+  include 'connection.php';
+  $email = $_POST['email'];
+  $select = "SELECT * FROM `page` where email = '{$email}'";
+  $query = mysqli_query($conn, $select);
+  if(mysqli_num_rows($query)>0){
+      while($row = mysqli_fetch_assoc($query)){
+        session_start();
+        
+        $_SESSION['$name'] = $row['name'];
+        $_SESSION['$email'] = $row['email'];
+        $_SESSION['$id'] = $row['id'];
+        $_SESSION['$status'] = $row['admin'];
+          header("LOCATION: index2.php");
+          
+      }
+  }else{
+    echo "input correct email!";
+}
+            }
+  ?>
+            <form action="logout.php" method="POST">
+                <label for="" class="w-100">
+                    Enter email
+                    <input type="email" class="form-control" name="email" placeholder="Enter Useremail" required>
+                </label>
+                <input type="submit" name="formsubmit" value="Login" class="btn btn-primary mt-2 mb-5">
+            </form> 
+        </div>
+    </div>
